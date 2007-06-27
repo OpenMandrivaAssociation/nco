@@ -1,8 +1,12 @@
-%define version 3.1.8
-%define release %mkrel 2
+%define version 3.9.0
+%define release %mkrel 1
+
+# default to 0
+%define build_ncocpp %{?_with_ncocpp:1}%{?!_with_ncocpp:0}
 
 %define major 3
 %define libname %mklibname %name %major
+%define libnamedevel %mklibname %name -d
 
 Summary: Arithmetic and metadata operators for netCDF and HDF4 files
 Name: nco
@@ -10,11 +14,16 @@ Version: %version
 Release: %release
 License: GPL
 Group: Sciences/Mathematics
-Source: ftp://nco.sourceforge.net/pub/nco/nco-%version.tar.bz2
+Source: ftp://nco.sourceforge.net/pub/nco/nco-%version.tar.gz
 URL: http://nco.sourceforge.net
-BuildRequires: gcc gcc-c++ 
+BuildRequires: gcc
 BuildRequires: netcdf-devel >= 3.6
 BuildRequires: udunits-devel
+%if %build_ncocpp
+# This package does not exists yet...
+BuildRequires: antlr-devel >= 3
+BuildRequires: gcc-c++
+%endif
 BuildRoot: %_tmppath/%name-%version-root
 
 %description
@@ -52,14 +61,15 @@ and analysis. The NCO homepage is http://nco.sourceforge.net.
 
 This package contains libraries from NCO.
 
-%package -n %libname-devel
+%package -n %libnamedevel
 Summary: Development files from NCO
 Group: Development/Other
 Provides: lib%name-devel = %version-%release
 Provides: %name-devel = %version-%release
 Requires: %libname = %version-%release
+Obsoletes: %mklibname -d %name 3
 
-%description -n %libname-devel
+%description -n %libnamedevel
 The netCDF Operators, or NCO, are a suite of programs known as
 operators. The operators facilitate manipulation and analysis of
 self-describing data stored in the netCDF or HDF4 formats, which are
@@ -79,8 +89,13 @@ This package contains files need to build application using NCO library.
 %setup -q 
 
 %build
-export CFLAGS="%optflags -fPIC"
-%configure2_5x
+%configure2_5x \
+%if %build_ncocpp
+    --enable-nco_cplusplus --enable-ncoxx
+%else
+    --disable-nco_cplusplus --disable-ncoxx
+%endif
+
 %make CPPFLAGS="%optflags -fPIC" CCFLAGS="%optflags -fPIC"
 
 %install
@@ -101,20 +116,22 @@ export CFLAGS="%optflags -fPIC"
 %defattr(-, root, root, -)
 %doc doc/*
 %{_libdir}/libnco-%version.so
+%if %build_ncocpp
 %{_libdir}/libnco_c++-%version.so
+%endif
 
-%files -n %libname-devel
+%files -n %libnamedevel
 %defattr(-, root, root, -)
 %doc doc/*
+%if %build_ncocpp
 %{_includedir}/*.hh
-%{_libdir}/libnco.a
-%{_libdir}/libnco.la
-%{_libdir}/libnco.so
 %{_libdir}/libnco_c++.so
 %{_libdir}/libnco_c++.la
 %{_libdir}/libnco_c++.a
+%endif
+%{_libdir}/libnco.a
+%{_libdir}/libnco.la
+%{_libdir}/libnco.so
 
 %clean
 [ %buildroot != '/' ] && rm -fr %buildroot
-
-
