@@ -1,4 +1,4 @@
-%define version 3.9.0
+%define version 3.9.2
 %define release %mkrel 1
 
 # default to 0
