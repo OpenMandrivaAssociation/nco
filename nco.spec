@@ -24,7 +24,6 @@ BuildRequires: udunits-devel
 BuildRequires: antlr-devel >= 3
 BuildRequires: gcc-c++
 %endif
-BuildRoot: %_tmppath/%name-%version-root
 
 %description
 The netCDF Operators, or NCO, are a suite of programs known as
