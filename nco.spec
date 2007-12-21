@@ -19,6 +19,7 @@ URL: http://nco.sourceforge.net
 BuildRequires: gcc
 BuildRequires: netcdf-devel >= 3.6
 BuildRequires: udunits-devel
+# we needs c++ in order to build ncap:
 BuildRequires: gcc-c++
 %if %build_ncocpp
 # This package does not exists yet...
