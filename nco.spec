@@ -96,6 +96,7 @@ This package contains files need to build application using NCO library.
 %else
     --disable-nco_cplusplus --disable-ncoxx
 %endif
+BuildRoot: %_tmppath/%name-%version-root
 
 %make CPPFLAGS="%optflags -fPIC" CCFLAGS="%optflags -fPIC"
 
