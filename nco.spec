@@ -1,4 +1,4 @@
-%define version 3.9.2
+%define version 3.9.3
 %define release %mkrel 1
 
 # default to 0
@@ -19,10 +19,10 @@ URL: http://nco.sourceforge.net
 BuildRequires: gcc
 BuildRequires: netcdf-devel >= 3.6
 BuildRequires: udunits-devel
+BuildRequires: gcc-c++
 %if %build_ncocpp
 # This package does not exists yet...
 BuildRequires: antlr-devel >= 3
-BuildRequires: gcc-c++
 %endif
 
 %description
