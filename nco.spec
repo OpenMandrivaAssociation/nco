@@ -25,6 +25,7 @@ BuildRequires: gcc-c++
 # This package does not exists yet...
 BuildRequires: antlr-devel >= 3
 %endif
+BuildRoot: %_tmppath/%name-%version-root
 
 %description
 The netCDF Operators, or NCO, are a suite of programs known as
