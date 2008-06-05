@@ -1,5 +1,7 @@
-%define version 3.9.3
+%define version 3.9.5
 %define release %mkrel 1
+
+%define _disable_ld_as_needed 1
 
 # default to 0
 %define build_ncocpp %{?_with_ncocpp:1}%{?!_with_ncocpp:0}
@@ -15,6 +17,7 @@ Release: %release
 License: GPL
 Group: Sciences/Mathematics
 Source: ftp://nco.sourceforge.net/pub/nco/nco-%version.tar.gz
+Patch0: nco-undefined-functions.patch
 URL: http://nco.sourceforge.net
 BuildRequires: gcc
 BuildRequires: netcdf-devel >= 3.6
@@ -88,6 +91,7 @@ This package contains files need to build application using NCO library.
 
 %prep
 %setup -q 
+%patch0 -p0 -b .undef-functions
 
 %build
 %configure2_5x \
@@ -96,9 +100,9 @@ This package contains files need to build application using NCO library.
 %else
     --disable-nco_cplusplus --disable-ncoxx
 %endif
-BuildRoot: %_tmppath/%name-%version-root
 
-%make CPPFLAGS="%optflags -fPIC" CCFLAGS="%optflags -fPIC"
+%make CPPFLAGS="%optflags -fPIC -I %_includedir/netcdf-3" \
+    CCFLAGS="%optflags -fPIC -I %_includedir/netcdf-3"
 
 %install
 %makeinstall
