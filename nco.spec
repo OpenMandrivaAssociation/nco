@@ -1,5 +1,5 @@
 %define version 3.9.5
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define _disable_ld_as_needed 1
 
