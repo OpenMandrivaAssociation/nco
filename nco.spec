@@ -1,5 +1,5 @@
-%define version 3.9.5
-%define release %mkrel 3
+%define version 4.0.1
+%define release %mkrel 1
 
 %define _disable_ld_as_needed 1
 
@@ -20,7 +20,7 @@ Source: ftp://nco.sourceforge.net/pub/nco/nco-%version.tar.gz
 Patch0: nco-undefined-functions.patch
 URL: http://nco.sourceforge.net
 BuildRequires: gcc
-BuildRequires: netcdf-devel >= 3.6
+BuildRequires: netcdf-devel >= 4.1
 BuildRequires: udunits-devel
 # we needs c++ in order to build ncap:
 BuildRequires: gcc-c++
@@ -91,14 +91,14 @@ This package contains files need to build application using NCO library.
 
 %prep
 %setup -q 
-%patch0 -p0 -b .undef-functions
+%patch0 -p1 -b .undef-functions
 
 %build
 %configure2_5x \
 %if %build_ncocpp
     --enable-nco_cplusplus --enable-ncoxx
 %else
-    --disable-nco_cplusplus --disable-ncoxx
+    --disable-nco_cplusplus --disable-ncoxx --disable-ncap2
 %endif
 
 %make CPPFLAGS="%optflags -fPIC -I %_includedir/netcdf-3" \
