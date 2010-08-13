@@ -1,7 +1,7 @@
-%define version 4.0.1
+%define version 4.0.2
 %define release %mkrel 1
 
-%define _disable_ld_as_needed 1
+%define _disable_ld_as_needed 0
 
 # default to 0
 %define build_ncocpp %{?_with_ncocpp:1}%{?!_with_ncocpp:0}
