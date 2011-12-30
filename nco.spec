@@ -1,5 +1,5 @@
-%define version 4.0.2
-%define release %mkrel 1
+%define version 4.0.8
+%define release 1
 
 %define _disable_ld_as_needed 0
 
@@ -16,7 +16,7 @@ Version: %version
 Release: %release
 License: GPL
 Group: Sciences/Mathematics
-Source: ftp://nco.sourceforge.net/pub/nco/nco-%version.tar.gz
+Source0: http://nco.sourceforge.net/src/%{name}-%{version}.tar.gz 
 Patch0: nco-undefined-functions.patch
 URL: http://nco.sourceforge.net
 BuildRequires: gcc
@@ -28,7 +28,6 @@ BuildRequires: gcc-c++
 # This package does not exists yet...
 BuildRequires: antlr-devel >= 3
 %endif
-BuildRoot: %_tmppath/%name-%version-root
 
 %description
 The netCDF Operators, or NCO, are a suite of programs known as
@@ -107,23 +106,13 @@ This package contains files need to build application using NCO library.
 %install
 %makeinstall
 
-%if %mdkversion < 200900
-%post -n %libname -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %libname -p /sbin/ldconfig
-%endif
-
 %files
-%defattr(-, root, root, -)
 %doc doc/*
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/*
 
 %files -n %libname
-%defattr(-, root, root, -)
 %doc doc/*
 %{_libdir}/libnco-%version.so
 %if %build_ncocpp
@@ -131,7 +120,6 @@ This package contains files need to build application using NCO library.
 %endif
 
 %files -n %libnamedevel
-%defattr(-, root, root, -)
 %doc doc/*
 %if %build_ncocpp
 %{_includedir}/*.hh
@@ -142,6 +130,3 @@ This package contains files need to build application using NCO library.
 %{_libdir}/libnco.a
 %{_libdir}/libnco.la
 %{_libdir}/libnco.so
-
-%clean
-[ %buildroot != '/' ] && rm -fr %buildroot
