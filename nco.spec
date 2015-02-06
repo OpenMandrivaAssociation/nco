@@ -10,7 +10,7 @@
 Summary: Arithmetic and metadata operators for netCDF and HDF4 files
 Name: nco
 Version: 4.0.8
-Release: 2
+Release: 3
 License: GPL
 Group: Sciences/Mathematics
 Source0: http://nco.sourceforge.net/src/%{name}-%{version}.tar.gz 
