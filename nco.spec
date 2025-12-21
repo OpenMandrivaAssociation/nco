@@ -16,6 +16,11 @@ Group: Sciences/Mathematics
 Source0: http://nco.sourceforge.net/src/%{name}-%{version}.tar.gz 
 Patch0: nco-undefined-functions.patch
 URL: https://nco.sourceforge.net
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires: netcdf-devel >= 4.1
 BuildRequires: udunits-devel
 # we needs c++ in order to build ncap:
